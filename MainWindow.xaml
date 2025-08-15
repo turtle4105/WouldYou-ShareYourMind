@@ -16,6 +16,78 @@
             <RowDefinition Height="84.04"/>
         </Grid.RowDefinitions>
 
+        <!-- 기본 배경색 -->
+        <Rectangle Fill="{StaticResource Brush.Bg}" />
+
+        <!-- 미세 별 레이어 (고밀도, 아주 작은 점) -->
+        <Rectangle x:Name="StarFineRect">
+            <Rectangle.Fill>
+                <VisualBrush TileMode="Tile"
+                         Viewport="0,0,220,220" ViewportUnits="Absolute"
+                         Viewbox="0,0,220,220" ViewboxUnits="Absolute"
+                         Opacity="0.75">
+                    <!-- 브러시 자체를 천천히 이동시켜 '스크롤' 효과 -->
+                    <VisualBrush.Transform>
+                        <TranslateTransform x:Name="StarLayerFineTT" />
+                    </VisualBrush.Transform>
+
+                    <VisualBrush.Visual>
+                        <!-- 타일 하나(220x220) 안에 작은 별 여러 개 배치 -->
+                        <Canvas Width="220" Height="220" Background="Transparent">
+                            <!-- 작은 별 (1~2px) 여러 개: 위치는 아무렇게나 흩뿌림 -->
+                            <Ellipse Width="1.5" Height="1.5" Fill="#C0FFFFFF" Canvas.Left="10"  Canvas.Top="16"/>
+                            <Ellipse Width="1.5" Height="1.5" Fill="#A0FFFFFF" Canvas.Left="40"  Canvas.Top="60"/>
+                            <Ellipse Width="1.5" Height="1.5" Fill="#C0FFFFFF" Canvas.Left="78"  Canvas.Top="22"/>
+                            <Ellipse Width="1.5" Height="1.5" Fill="#90FFFFFF" Canvas.Left="110" Canvas.Top="90"/>
+                            <Ellipse Width="1.5" Height="1.5" Fill="#B0FFFFFF" Canvas.Left="150" Canvas.Top="40"/>
+                            <Ellipse Width="1.5" Height="1.5" Fill="#80FFFFFF" Canvas.Left="190" Canvas.Top="18"/>
+                            <Ellipse Width="1.5" Height="1.5" Fill="#C0FFFFFF" Canvas.Left="12"  Canvas.Top="140"/>
+                            <Ellipse Width="1.5" Height="1.5" Fill="#A0FFFFFF" Canvas.Left="60"  Canvas.Top="170"/>
+                            <Ellipse Width="1.5" Height="1.5" Fill="#C0FFFFFF" Canvas.Left="100" Canvas.Top="130"/>
+                            <Ellipse Width="1.5" Height="1.5" Fill="#90FFFFFF" Canvas.Left="140" Canvas.Top="200"/>
+                            <Ellipse Width="1.5" Height="1.5" Fill="#B0FFFFFF" Canvas.Left="200" Canvas.Top="160"/>
+                        </Canvas>
+                    </VisualBrush.Visual>
+                </VisualBrush>
+            </Rectangle.Fill>
+        </Rectangle>
+
+        <!-- 큰 별 레이어 (저밀도, 살짝 큰 점) -->
+        <Rectangle x:Name="StarBigRect">
+            <Rectangle.Fill>
+                <VisualBrush TileMode="Tile"
+                         Viewport="0,0,320,320" ViewportUnits="Absolute"
+                         Viewbox="0,0,320,320" ViewboxUnits="Absolute"
+                         Opacity="0.55">
+                    <VisualBrush.Transform>
+                        <TranslateTransform x:Name="StarLayerBigTT" />
+                    </VisualBrush.Transform>
+
+                    <VisualBrush.Visual>
+                        <Canvas Width="320" Height="320" Background="Transparent">
+                            <!-- 2~3px 별 -->
+                            <Ellipse Width="2.5" Height="2.5" Fill="#C0FFFFFF" Canvas.Left="24"  Canvas.Top="40"/>
+                            <Ellipse Width="2.0" Height="2.0" Fill="#A0FFFFFF" Canvas.Left="120" Canvas.Top="12"/>
+                            <Ellipse Width="2.8" Height="2.8" Fill="#E0FFFFFF" Canvas.Left="200" Canvas.Top="68"/>
+                            <Ellipse Width="2.2" Height="2.2" Fill="#90FFFFFF" Canvas.Left="280" Canvas.Top="100"/>
+                            <Ellipse Width="2.4" Height="2.4" Fill="#B0FFFFFF" Canvas.Left="60"  Canvas.Top="220"/>
+                            <Ellipse Width="2.0" Height="2.0" Fill="#A0FFFFFF" Canvas.Left="240" Canvas.Top="250"/>
+                        </Canvas>
+                    </VisualBrush.Visual>
+                </VisualBrush>
+            </Rectangle.Fill>
+        </Rectangle>
+
+        <!-- 아주 은은한 오로라 느낌 (그라데이션 베일) -->
+        <Rectangle IsHitTestVisible="False" Opacity="0.10">
+            <Rectangle.Fill>
+                <RadialGradientBrush GradientOrigin="0.6,0.3" Center="0.5,0.4" RadiusX="0.9" RadiusY="0.9">
+                    <GradientStop Color="{StaticResource Clr.Mint}"   Offset="0.0" />
+                    <GradientStop Color="{StaticResource Clr.Purple}" Offset="1.0" />
+                </RadialGradientBrush>
+            </Rectangle.Fill>
+        </Rectangle>
+
         <!-- 메인 콘텐츠 -->
         <ContentControl Grid.Row="0"
                     Content="{Binding CurrentView}"
@@ -142,5 +214,48 @@
 
             </UniformGrid>
         </Border>
+
+        <!-- 애니메이션: 브러시 이동 + 살짝 깜빡임 -->
+        <Grid.Triggers>
+            <!-- 미세 별 이동 -->
+            <EventTrigger RoutedEvent="Loaded">
+                <BeginStoryboard>
+                    <Storyboard RepeatBehavior="Forever">
+                        <DoubleAnimation Storyboard.TargetName="StarFineRect"
+                         Storyboard.TargetProperty="(Rectangle.Fill).(VisualBrush.Transform).(TranslateTransform.X)"
+                         From="0" To="-220" Duration="0:00:35"/>
+                        <DoubleAnimation Storyboard.TargetName="StarFineRect"
+                         Storyboard.TargetProperty="(Rectangle.Fill).(VisualBrush.Transform).(TranslateTransform.Y)"
+                         From="0" To="-220" Duration="0:00:55"/>
+                    </Storyboard>
+                </BeginStoryboard>
+            </EventTrigger>
+
+            <!-- 큰 별 이동 -->
+            <EventTrigger RoutedEvent="Loaded">
+                <BeginStoryboard>
+                    <Storyboard RepeatBehavior="Forever">
+                        <DoubleAnimation Storyboard.TargetName="StarBigRect"
+                         Storyboard.TargetProperty="(Rectangle.Fill).(VisualBrush.Transform).(TranslateTransform.X)"
+                         From="0" To="-320" Duration="0:00:50"/>
+                        <DoubleAnimation Storyboard.TargetName="StarBigRect"
+                         Storyboard.TargetProperty="(Rectangle.Fill).(VisualBrush.Transform).(TranslateTransform.Y)"
+                         From="0" To="-160" Duration="0:01:10"/>
+                    </Storyboard>
+                </BeginStoryboard>
+            </EventTrigger>
+
+            <!-- 오로라만 은은하게 -->
+            <EventTrigger RoutedEvent="Loaded">
+                <BeginStoryboard>
+                    <Storyboard RepeatBehavior="Forever" AutoReverse="True">
+                        <DoubleAnimation Storyboard.TargetName="AuroraRect"
+                         Storyboard.TargetProperty="Opacity"
+                         From="0.06" To="0.14" Duration="0:00:10"/>
+                    </Storyboard>
+                </BeginStoryboard>
+            </EventTrigger>
+        </Grid.Triggers>
+
     </Grid>
 </Window>
