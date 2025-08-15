@@ -18,7 +18,7 @@ namespace WouldYou_ShareMind.Views
     /// <summary>
     /// ArchiveView.xaml에 대한 상호 작용 논리
     /// </summary>
-    public partial class ArchiveView : Page
+    public partial class ArchiveView : UserControl
     {
         public ArchiveView()
         {

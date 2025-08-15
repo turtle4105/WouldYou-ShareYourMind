@@ -4,23 +4,162 @@
              xmlns:views="clr-namespace:WouldYou_ShareMind.Views"
              xmlns:vm="clr-namespace:WouldYou_ShareMind.ViewModels">
     <Application.Resources>
+
+        <!-- =========== Colors / Brushes =========== -->
+        <Color x:Key="Clr.Bg">#0B0F1A</Color>
+        <Color x:Key="Clr.Panel">#0F1422</Color>
+        <Color x:Key="Clr.PanelAlt">#111827</Color>
+        <Color x:Key="Clr.Mint">#8ED7D6</Color>
+        <Color x:Key="Clr.Purple">#4F24A9</Color>
+        <Color x:Key="Clr.LightPurple">#C1BCD2</Color>
+        <Color x:Key="Clr.Sky">#6C96AB</Color>
+        <Color x:Key="Clr.Gray">#9EA1B5</Color>
+        <Color x:Key="Clr.DarkGray">#585868</Color>
+        <Color x:Key="Clr.White">#FFFFFF</Color>
+
+        <SolidColorBrush x:Key="Brush.Bg" Color="{StaticResource Clr.Bg}"/>
+        <SolidColorBrush x:Key="Brush.Panel" Color="{StaticResource Clr.Panel}"/>
+        <SolidColorBrush x:Key="Brush.PanelAlt" Color="{StaticResource Clr.PanelAlt}"/>
+        <SolidColorBrush x:Key="Brush.Text" Color="{StaticResource Clr.White}"/>
+        <!-- Opacity는 Brush에 따로 부여 -->
+        <Color x:Key="Clr.LightPurpleSubtle">#CCC1BCD2</Color>
+        <!-- CC(=80%) + C1BCD2 -->
+        <SolidColorBrush x:Key="Brush.TextSubtle" Color="{StaticResource Clr.LightPurpleSubtle}"/>
+        <SolidColorBrush x:Key="Brush.Gray" Color="{StaticResource Clr.Gray}"/>
+        <SolidColorBrush x:Key="Brush.DarkGray" Color="{StaticResource Clr.DarkGray}"/>
+        <SolidColorBrush x:Key="Brush.Mint" Color="{StaticResource Clr.Mint}"/>
+
+        <LinearGradientBrush x:Key="Grad.Accent" StartPoint="0,0" EndPoint="1,0">
+            <GradientStop Color="{StaticResource Clr.Mint}" Offset="0"/>
+            <GradientStop Color="{StaticResource Clr.Purple}" Offset="1"/>
+        </LinearGradientBrush>
+
+        <!-- 투명도는 GradientStop.Opacity로 -->
+        <!-- 추가: 알파 포함 컬러 -->
+        <Color x:Key="Clr.Mint40">#668ED7D6</Color>
+        <!-- 0x66(≈40%) + 8ED7D6 -->
+        <Color x:Key="Clr.Purple40">#664F24A9</Color>
+        <!-- 0x66 + 4F24A9 -->
+
+        <!-- 그라데이션 정의 -->
+        <LinearGradientBrush x:Key="Grad.Border" StartPoint="0,0" EndPoint="1,1">
+            <GradientStop Color="{StaticResource Clr.Mint40}"   Offset="0"/>
+            <GradientStop Color="{StaticResource Clr.Purple40}" Offset="1"/>
+        </LinearGradientBrush>
+
+        <CornerRadius x:Key="Cr.Card">16</CornerRadius>
+        <CornerRadius x:Key="Cr.Pill">22</CornerRadius>
+        <Thickness x:Key="Th.CardPadding">16</Thickness>
+
+        <!-- =========== Text Styles =========== -->
+        <Style x:Key="Txt.Title" TargetType="TextBlock">
+            <Setter Property="Foreground" Value="{StaticResource Brush.Text}"/>
+            <Setter Property="FontSize" Value="20"/>
+            <Setter Property="FontWeight" Value="SemiBold"/>
+            <Setter Property="TextWrapping" Value="Wrap"/>
+        </Style>
+        <Style x:Key="Txt.Subtitle" TargetType="TextBlock">
+            <Setter Property="Foreground" Value="{StaticResource Brush.TextSubtle}"/>
+            <Setter Property="FontSize" Value="14"/>
+            <Setter Property="TextWrapping" Value="Wrap"/>
+        </Style>
+        <Style x:Key="Txt.Body" TargetType="TextBlock">
+            <Setter Property="Foreground" Value="{StaticResource Brush.Text}"/>
+            <Setter Property="FontSize" Value="14"/>
+            <Setter Property="TextWrapping" Value="Wrap"/>
+        </Style>
+
+        <!-- =========== Cards =========== -->
+        <Style x:Key="Card.Panel" TargetType="Border">
+            <Setter Property="Background" Value="{StaticResource Brush.Panel}"/>
+            <Setter Property="CornerRadius" Value="{StaticResource Cr.Card}"/>
+            <Setter Property="Padding" Value="{StaticResource Th.CardPadding}"/>
+            <Setter Property="BorderThickness" Value="1.4"/>
+            <Setter Property="BorderBrush" Value="{StaticResource Grad.Border}"/>
+        </Style>
+        <Style x:Key="Card.Editor" TargetType="Border" BasedOn="{StaticResource Card.Panel}">
+            <Setter Property="Padding" Value="12"/>
+            <Setter Property="BorderThickness" Value="1.8"/>
+        </Style>
+
+        <!-- =========== Buttons =========== -->
+        <Style x:Key="Btn.Primary" TargetType="Button">
+            <Setter Property="Foreground" Value="White"/>
+            <Setter Property="Background" Value="{StaticResource Grad.Accent}"/>
+            <Setter Property="Padding" Value="12,10"/>
+            <Setter Property="FontWeight" Value="SemiBold"/>
+            <Setter Property="BorderThickness" Value="0"/>
+            <Setter Property="HorizontalAlignment" Value="Center"/>
+            <Setter Property="MinWidth" Value="180"/>
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="Button">
+                        <Border CornerRadius="{StaticResource Cr.Pill}" Background="{TemplateBinding Background}">
+                            <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center" Margin="8,2"/>
+                        </Border>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
+
+        <Style x:Key="Btn.Secondary" TargetType="Button">
+            <Setter Property="Foreground" Value="{StaticResource Brush.Text}"/>
+            <Setter Property="Background" Value="{StaticResource Brush.PanelAlt}"/>
+            <Setter Property="Padding" Value="10,8"/>
+            <Setter Property="BorderThickness" Value="1.4"/>
+            <Setter Property="BorderBrush" Value="{StaticResource Grad.Border}"/>
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="Button">
+                        <Border CornerRadius="{StaticResource Cr.Pill}"
+                                Background="{TemplateBinding Background}"
+                                BorderBrush="{TemplateBinding BorderBrush}"
+                                BorderThickness="{TemplateBinding BorderThickness}">
+                            <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center" Margin="8,2"/>
+                        </Border>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
+
+        <!-- 네비 공통 룩(한 번만 정의! 중복되면 삭제) -->
+        <Style x:Key="Btn.Nav" TargetType="Button">
+            <Setter Property="Foreground" Value="{StaticResource Brush.Text}"/>
+            <Setter Property="Background" Value="Transparent"/>
+            <Setter Property="BorderThickness" Value="0"/>
+            <Setter Property="Padding" Value="6,4"/>
+            <Setter Property="HorizontalContentAlignment" Value="Center"/>
+            <Setter Property="VerticalContentAlignment" Value="Center"/>
+            <Setter Property="Opacity" Value="0.75"/>
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="Button">
+                        <Border Background="{TemplateBinding Background}">
+                            <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                        </Border>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
+
+        <!-- =========== DataTemplates =========== -->
         <DataTemplate DataType="{x:Type vm:HomeViewModel}">
-            <views:HomeView />
+            <views:HomeView/>
         </DataTemplate>
         <DataTemplate DataType="{x:Type vm:ShareMindViewModel}">
-            <views:ShareMindView />
+            <views:ShareMindView/>
         </DataTemplate>
         <DataTemplate DataType="{x:Type vm:SleepModeViewModel}">
-            <views:SleepModeView />
+            <views:SleepModeView/>
         </DataTemplate>
         <DataTemplate DataType="{x:Type vm:ArchiveViewModel}">
-            <views:ArchiveView />
+            <views:ArchiveView/>
         </DataTemplate>
         <DataTemplate DataType="{x:Type vm:SettingViewModel}">
-            <views:SettingView />
+            <views:SettingView/>
         </DataTemplate>
         <DataTemplate DataType="{x:Type vm:RecvPopupViewModel}">
-            <views:RecvPopupPage />
+            <views:RecvPopupPage/>
         </DataTemplate>
     </Application.Resources>
 </Application>

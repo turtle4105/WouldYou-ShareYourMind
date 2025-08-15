@@ -18,7 +18,7 @@ namespace WouldYou_ShareMind.Views
     /// <summary>
     /// SettingView.xaml에 대한 상호 작용 논리
     /// </summary>
-    public partial class SettingView : Page
+    public partial class SettingView : UserControl
     {
         public SettingView()
         {

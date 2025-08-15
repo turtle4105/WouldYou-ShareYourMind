@@ -18,7 +18,7 @@ namespace WouldYou_ShareMind.Views
     /// <summary>
     /// ShareMindView.xaml에 대한 상호 작용 논리
     /// </summary>
-    public partial class ShareMindView : Page
+    public partial class ShareMindView : UserControl
     {
         public ShareMindView()
         {

@@ -1,12 +1,146 @@
 ﻿<Window x:Class="WouldYou_ShareMind.MainWindow"
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
-        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-        xmlns:local="clr-namespace:WouldYou_ShareMind"
-        mc:Ignorable="d"
-        Title="MainWindow" Height="450" Width="800">
-    <Grid>
+        xmlns:vm="clr-namespace:WouldYou_ShareMind.ViewModels"
+        Title="WouldYou-ShareMind" Width="420" Height="780"
+        FontFamily="Noto Sans KR"
+        Background="{StaticResource Brush.Bg}">
+    <Window.Resources>
+        <!-- BooleanToVisibilityConverter는 이렇게 리소스로 생성해서 사용 -->
+        <BooleanToVisibilityConverter x:Key="BoolToVis"/>
+    </Window.Resources>
 
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition/>
+            <RowDefinition Height="84.04"/>
+        </Grid.RowDefinitions>
+
+        <!-- 메인 콘텐츠 -->
+        <ContentControl Grid.Row="0"
+                    Content="{Binding CurrentView}"
+                    Margin="16,16,16,8"/>
+
+        <!-- 하단 네비 -->
+        <Border
+            Background="{StaticResource Brush.Panel}"
+            BorderBrush="{StaticResource Grad.Border}"
+            BorderThickness="1"
+            Padding="2"
+            Visibility="{Binding ShowNavBar, Converter={StaticResource BoolToVis}}" Grid.Row="1">
+            <UniformGrid Rows="1" Columns="5">
+
+                <!-- 홈 -->
+                <Button Command="{Binding GoHomeCommand}">
+                    <Button.Style>
+                        <Style TargetType="Button" BasedOn="{StaticResource Btn.Nav}">
+                            <Setter Property="Content">
+                                <Setter.Value>
+                                    <StackPanel Orientation="Vertical" HorizontalAlignment="Center" Margin="0,2">
+                                        <Image Source="/Resources/images/nav_home.png" Width="55" Height="50"/>
+                                        <TextBlock Text="홈" FontSize="11" Margin="24,-7,0,0"/>
+                                    </StackPanel>
+                                </Setter.Value>
+                            </Setter>
+                            <Style.Triggers>
+                                <DataTrigger Binding="{Binding ActiveTab}" Value="{x:Static vm:NavTab.Home}">
+                                    <Setter Property="Opacity" Value="1"/>
+                                    <Setter Property="Foreground" Value="{StaticResource Brush.Mint}"/>
+                                </DataTrigger>
+                            </Style.Triggers>
+                        </Style>
+                    </Button.Style>
+                </Button>
+
+                <!-- 마음 나누기 -->
+                <Button Command="{Binding GoShareCommand}">
+                    <Button.Style>
+                        <Style TargetType="Button" BasedOn="{StaticResource Btn.Nav}">
+                            <Setter Property="Content">
+                                <Setter.Value>
+                                    <StackPanel Orientation="Vertical" HorizontalAlignment="Center" Margin="0,2">
+                                        <Image Source="/Resources/images/nav_share.png" Width="50" Height="40"/>
+                                        <TextBlock Text="마음 나누기" FontSize="11" Margin="7,4,0,0"/>
+                                    </StackPanel>
+                                </Setter.Value>
+                            </Setter>
+                            <Style.Triggers>
+                                <DataTrigger Binding="{Binding ActiveTab}" Value="{x:Static vm:NavTab.Share}">
+                                    <Setter Property="Opacity" Value="1"/>
+                                    <Setter Property="Foreground" Value="{StaticResource Brush.Mint}"/>
+                                </DataTrigger>
+                            </Style.Triggers>
+                        </Style>
+                    </Button.Style>
+                </Button>
+
+                <!-- 보관함 -->
+                <Button Command="{Binding GoArchiveCommand}">
+                    <Button.Style>
+                        <Style TargetType="Button" BasedOn="{StaticResource Btn.Nav}">
+                            <Setter Property="Content">
+                                <Setter.Value>
+                                    <StackPanel Orientation="Vertical" HorizontalAlignment="Center" Margin="0,2">
+                                        <Image Source="/Resources/images/nav_archive.png" Width="45" Height="45"/>
+                                        <TextBlock Text="보관함" FontSize="11" Margin="15,0,0,0"/>
+                                    </StackPanel>
+                                </Setter.Value>
+                            </Setter>
+                            <Style.Triggers>
+                                <DataTrigger Binding="{Binding ActiveTab}" Value="{x:Static vm:NavTab.Archive}">
+                                    <Setter Property="Opacity" Value="1"/>
+                                    <Setter Property="Foreground" Value="{StaticResource Brush.Mint}"/>
+                                </DataTrigger>
+                            </Style.Triggers>
+                        </Style>
+                    </Button.Style>
+                </Button>
+
+                <!-- 수면모드 -->
+                <Button Command="{Binding GoSleepCommand}">
+                    <Button.Style>
+                        <Style TargetType="Button" BasedOn="{StaticResource Btn.Nav}">
+                            <Setter Property="Content">
+                                <Setter.Value>
+                                    <StackPanel Orientation="Vertical" HorizontalAlignment="Center" Margin="0,2">
+                                        <Image Source="/Resources/images/nav_sleep.png" Width="45" Height="45"/>
+                                        <TextBlock Text="수면모드" FontSize="11" Margin="5,2,0,0"/>
+                                    </StackPanel>
+                                </Setter.Value>
+                            </Setter>
+                            <Style.Triggers>
+                                <DataTrigger Binding="{Binding ActiveTab}" Value="{x:Static vm:NavTab.Sleep}">
+                                    <Setter Property="Opacity" Value="1"/>
+                                    <Setter Property="Foreground" Value="{StaticResource Brush.Mint}"/>
+                                </DataTrigger>
+                            </Style.Triggers>
+                        </Style>
+                    </Button.Style>
+                </Button>
+
+                <!-- 설정 -->
+                <Button Command="{Binding GoSettingCommand}">
+                    <Button.Style>
+                        <Style TargetType="Button" BasedOn="{StaticResource Btn.Nav}">
+                            <Setter Property="Content">
+                                <Setter.Value>
+                                    <StackPanel Orientation="Vertical" HorizontalAlignment="Center" Margin="0,2">
+                                        <Image Source="/Resources/images/nav_setting.png" Width="45" Height="45"/>
+                                        <TextBlock Text="설정" FontSize="11" Margin="13,2,0,0"/>
+                                    </StackPanel>
+                                </Setter.Value>
+                            </Setter>
+                            <Style.Triggers>
+                                <DataTrigger Binding="{Binding ActiveTab}" Value="{x:Static vm:NavTab.Setting}">
+                                    <Setter Property="Opacity" Value="1"/>
+                                    <Setter Property="Foreground" Value="{StaticResource Brush.Mint}"/>
+                                </DataTrigger>
+                            </Style.Triggers>
+                        </Style>
+                    </Button.Style>
+                </Button>
+
+            </UniformGrid>
+        </Border>
     </Grid>
 </Window>

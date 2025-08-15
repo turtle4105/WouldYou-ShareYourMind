@@ -18,7 +18,7 @@ namespace WouldYou_ShareMind.Views
     /// <summary>
     /// RecvPopupPage.xaml에 대한 상호 작용 논리
     /// </summary>
-    public partial class RecvPopupPage : Page
+    public partial class RecvPopupPage : UserControl
     {
         public RecvPopupPage()
         {

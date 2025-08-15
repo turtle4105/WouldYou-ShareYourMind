@@ -1,14 +1,13 @@
-﻿<Page x:Class="WouldYou_ShareMind.Views.SleepModeView"
+﻿<UserControl x:Class="WouldYou_ShareMind.Views.SleepModeView"
       xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
       xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
       xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
       xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
       xmlns:local="clr-namespace:WouldYou_ShareMind.Views"
       mc:Ignorable="d" 
-      d:DesignHeight="800" d:DesignWidth="400"
-      Title="SleepModeView">
+      d:DesignHeight="800" d:DesignWidth="400">
 
     <Grid>
         
     </Grid>
-</Page>
+</UserControl>

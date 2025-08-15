@@ -10,10 +10,28 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <None Remove="Resources\images\logo.png" />
+    <None Remove="Resources\images\nav_archive.png" />
+    <None Remove="Resources\images\nav_home.png" />
+    <None Remove="Resources\images\nav_setting.png" />
+    <None Remove="Resources\images\nav_share.png" />
+    <None Remove="Resources\images\nav_sleep.png" />
+  </ItemGroup>
+
+  <ItemGroup>
     <PackageReference Include="CommunityToolkit.Mvvm" Version="8.4.0" />
     <PackageReference Include="Microsoft.Data.Sqlite" Version="9.0.8" />
     <PackageReference Include="Microsoft.Extensions.DependencyInjection" Version="9.0.8" />
     <PackageReference Include="NAudio" Version="2.2.1" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Resource Include="Resources\images\logo.png" />
+    <Resource Include="Resources\images\nav_archive.png" />
+    <Resource Include="Resources\images\nav_home.png" />
+    <Resource Include="Resources\images\nav_setting.png" />
+    <Resource Include="Resources\images\nav_share.png" />
+    <Resource Include="Resources\images\nav_sleep.png" />
   </ItemGroup>
 
 </Project>
