@@ -10,18 +10,23 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <None Remove="Resources\images\breathe.png" />
     <None Remove="Resources\images\dot.png" />
     <None Remove="Resources\images\dot_2.png" />
     <None Remove="Resources\images\galaxy.png" />
     <None Remove="Resources\images\Home_Release.png" />
     <None Remove="Resources\images\Home_sleep.png" />
     <None Remove="Resources\images\Home_SM.png" />
+    <None Remove="Resources\images\language.png" />
     <None Remove="Resources\images\logo.png" />
     <None Remove="Resources\images\nav_archive.png" />
     <None Remove="Resources\images\nav_home.png" />
     <None Remove="Resources\images\nav_setting.png" />
     <None Remove="Resources\images\nav_share.png" />
     <None Remove="Resources\images\nav_sleep.png" />
+    <None Remove="Resources\images\soundsetting.png" />
+    <None Remove="Resources\images\theme.png" />
+    <None Remove="Resources\images\timer.png" />
   </ItemGroup>
 
   <ItemGroup>
@@ -32,18 +37,23 @@
   </ItemGroup>
 
   <ItemGroup>
+    <Resource Include="Resources\images\breathe.png" />
     <Resource Include="Resources\images\dot.png" />
     <Resource Include="Resources\images\dot_2.png" />
     <Resource Include="Resources\images\galaxy.png" />
     <Resource Include="Resources\images\Home_Release.png" />
     <Resource Include="Resources\images\Home_sleep.png" />
     <Resource Include="Resources\images\Home_SM.png" />
+    <Resource Include="Resources\images\language.png" />
     <Resource Include="Resources\images\logo.png" />
     <Resource Include="Resources\images\nav_archive.png" />
     <Resource Include="Resources\images\nav_home.png" />
     <Resource Include="Resources\images\nav_setting.png" />
     <Resource Include="Resources\images\nav_share.png" />
     <Resource Include="Resources\images\nav_sleep.png" />
+    <Resource Include="Resources\images\soundsetting.png" />
+    <Resource Include="Resources\images\theme.png" />
+    <Resource Include="Resources\images\timer.png" />
   </ItemGroup>
 
 </Project>

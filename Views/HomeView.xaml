@@ -4,6 +4,7 @@
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     mc:Ignorable="d"
+    FontFamily="Noto Sans KR"
     d:DesignHeight="750" d:DesignWidth="400">
 
     <!-- 화면 여백만 두고, 색/폰트/스타일은 전부 App.xaml 리소스 사용 -->
