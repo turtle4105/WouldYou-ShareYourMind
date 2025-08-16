@@ -35,22 +35,28 @@
                    Style="{StaticResource Txt.Title}"
                    FontSize="18"
                    TextAlignment="Center"
-                   Text="마음이 우주에 닿았어요." />
+                   Text="마음이 우주에 닿았어요" />
+
 
         <!-- 메시지 카드 -->
         <Border Grid.Row="4"
-                Style="{StaticResource Card.Panel}"
-                Background="Transparent"
-                Padding="16" Margin="0,0,0,0">
+        Style="{StaticResource Card.Panel}"
+        Background="Transparent"
+        Padding="16" Margin="0,0,0,0">
             <TextBlock Style="{StaticResource Txt.Body}"
-                       TextAlignment="Center"
-                       LineHeight="20"><Run Text="무거운 생각들이 블랙홀을 지나 멀리 사라지고 "/><Run Language="ko-kr" Text=" "/><Run Text="있어요. 남은 건 가벼운 빛과 따뜻한 숨뿐이에요. "/><Run Language="ko-kr" Text="  "/><Run Text="수천억 개의 별들이 빛나는 은하가 당신의 마음을 부드럽게 감싸고 있어요. 그 안에서 모든 걱정이 천천히 녹아내립니다."/></TextBlock>
+               Text="{Binding Message,
+                              TargetNullValue='조금만 스스로에게 다정하게…',
+                              FallbackValue='조금만 스스로에게 다정하게…'}"
+               TextAlignment="Center"
+               TextWrapping="Wrap"
+               LineHeight="20"/>
         </Border>
+
 
         <!-- 버튼 2개 사이 여백은 첫 번째 버튼의 오른쪽 Margin으로 -->
         <StackPanel Grid.Row="6" Orientation="Horizontal" HorizontalAlignment="Center">
             <Button Style="{StaticResource Btn.Primary}"
-            Command="{Binding GoSleepModeCommand}"
+            Command="{Binding DataContext.GoSleepCommand, RelativeSource={RelativeSource AncestorType=Window}}"
             Padding="14,8" MinWidth="120" Height="40"
             Margin="0,0,12,0">
                 <StackPanel Orientation="Horizontal">
@@ -60,18 +66,26 @@
             </Button>
 
             <Button Style="{StaticResource Btn.Secondary}"
-            Command="{Binding ClosePopupCommand}"
+            Command="{Binding DataContext.GoHomeCommand, RelativeSource={RelativeSource AncestorType=Window}}"
             Padding="14,8" MinWidth="80" Height="40">
                 닫기
             </Button>
         </StackPanel>
 
         <Image Source="/Resources/images/twinkle.png"
-           Width="88" Height="104"
+           Width="88" Height="110"
            HorizontalAlignment="Left"
            VerticalAlignment="Top"
-           Margin="235,15,0,0"
-           IsHitTestVisible="False"
-            Grid.RowSpan="4"/>
+           Margin="236,10,0,0"
+           IsHitTestVisible="False" Grid.RowSpan="4" RenderTransformOrigin="0.5,0.5">
+            <Image.RenderTransform>
+                <TransformGroup>
+                    <ScaleTransform/>
+                    <SkewTransform/>
+                    <RotateTransform Angle="-90.003"/>
+                    <TranslateTransform/>
+                </TransformGroup>
+            </Image.RenderTransform>
+        </Image>
     </Grid>
 </UserControl>
