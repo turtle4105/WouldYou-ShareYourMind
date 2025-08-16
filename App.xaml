@@ -2,8 +2,12 @@
              xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:views="clr-namespace:WouldYou_ShareMind.Views"
-             xmlns:vm="clr-namespace:WouldYou_ShareMind.ViewModels">
+             xmlns:vm="clr-namespace:WouldYou_ShareMind.ViewModels"
+             xmlns:conv="clr-namespace:WouldYou_ShareMind.Converters">
     <Application.Resources>
+        
+        <!--Converters -->
+        <conv:BoolToVisibilityConverter x:Key="BoolToVis"/>
 
         <!-- =========== Colors / Brushes =========== -->
         <Color x:Key="Clr.Bg">#0B0F1A</Color>

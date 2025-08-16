@@ -1,13 +1,105 @@
 ﻿<UserControl x:Class="WouldYou_ShareMind.Views.ShareMindView"
-      xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
-      xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-      xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
-      xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
-      xmlns:local="clr-namespace:WouldYou_ShareMind.Views"
-      mc:Ignorable="d" 
-      d:DesignHeight="750" d:DesignWidth="400">
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             mc:Ignorable="d"
+             FontFamily="Noto Sans KR"
+             d:DesignWidth="400" d:DesignHeight="750">
 
-    <Grid>
-        
+    <Grid Margin="20,24,20,12">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <!-- 헤더 타이틀 -->
+            <RowDefinition Height="0"/>
+            <RowDefinition Height="Auto"/>
+            <!-- 서브타이틀 -->
+            <RowDefinition Height="16"/>
+            <RowDefinition Height="*"/>
+            <!-- 에디터 카드 -->
+            <RowDefinition Height="10"/>
+            <RowDefinition Height="Auto"/>
+            <!-- 공개/카운터 -->
+            <RowDefinition Height="10"/>
+            <RowDefinition Height="Auto"/>
+            <!-- 태그 추가 -->
+            <RowDefinition Height="0"/>
+            <RowDefinition Height="Auto"/>
+            <!-- 제출 버튼 -->
+        </Grid.RowDefinitions>
+
+        <!-- 서브 타이틀 -->
+        <TextBlock Grid.Row="2"
+                   Style="{StaticResource Txt.Subtitle}"
+                   Text="오늘의 마음을 우주와 조용히 나눠요."
+                   TextAlignment="Center"
+                   Margin="0,0,0,0"/>
+
+        <!-- 에디터 카드 -->
+        <Border Grid.Row="4"
+                Style="{StaticResource Card.Editor}"
+                Background="{StaticResource Brush.Panel}">
+            <Grid>
+                <!-- 텍스트 박스 -->
+                <TextBox x:Name="InputBox"
+                         Text="{Binding Content, UpdateSourceTrigger=PropertyChanged, Delay=50}"
+                         AcceptsReturn="True" TextWrapping="Wrap"
+                         BorderThickness="0" Background="Transparent"
+                         Foreground="{StaticResource Brush.Text}"
+                         CaretBrush="{StaticResource Brush.Text}"
+                         ScrollViewer.VerticalScrollBarVisibility="Hidden"
+                         MaxLength="800"/>
+
+                <!-- 플레이스홀더 -->
+                <TextBlock Text="하고 싶은 이야기를 마음껏 털어놔 주세요."
+                   HorizontalAlignment="Center"
+                   VerticalAlignment="Center"
+                   IsHitTestVisible="False">
+                    <TextBlock.Style>
+                        <Style TargetType="TextBlock" BasedOn="{StaticResource Txt.Subtitle}">
+                            <Setter Property="Visibility" Value="Collapsed"/>
+                            <Style.Triggers>
+                                <!-- TextBox의 길이가 0일 때만 보이기 -->
+                                <DataTrigger Binding="{Binding ElementName=InputBox, Path=Text.Length}" Value="0">
+                                    <Setter Property="Visibility" Value="Visible"/>
+                                </DataTrigger>
+                            </Style.Triggers>
+                        </Style>
+                    </TextBlock.Style>
+                </TextBlock>
+            </Grid>
+        </Border>
+
+        <!-- 공개 / 글자수 -->
+        <Grid Grid.Row="6">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="Auto"/>
+            </Grid.ColumnDefinitions>
+
+            <StackPanel Orientation="Horizontal">
+                <CheckBox Content="공개"
+                  IsChecked="{Binding IsPublic, Mode=TwoWay}"
+                  Foreground="{StaticResource Brush.Text}"
+                  Margin="0,0,8,0"/>
+
+            </StackPanel>
+
+            <!-- 글자 수 카운터 -->
+            <TextBlock Grid.Column="1"
+                       Style="{StaticResource Txt.Subtitle}"
+                       Text="{Binding ElementName=InputBox, Path=Text.Length, StringFormat={}{0}/800}"/>
+        </Grid>
+
+        <!-- 제출 버튼 -->
+        <Button Grid.Row="10"
+                Style="{StaticResource Btn.Primary}"
+                Command="{Binding SubmitCommand}"
+                MinWidth="200" Padding="12,10" Height="40" Margin="0,0,0,10">
+            <StackPanel Orientation="Horizontal" HorizontalAlignment="Center">
+                <TextBlock Text="✦" Margin="0,0,6,0"/>
+                <TextBlock Text="마음 나누기" FontSize="15"/>
+            </StackPanel>
+        </Button>
     </Grid>
 </UserControl>
