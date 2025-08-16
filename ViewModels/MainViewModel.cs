@@ -34,7 +34,7 @@ namespace WouldYou_ShareMind.ViewModels
             {
                 var result = MessageBox.Show(
                     "작성 중인 내용이 있어요.\n이동하면 지금까지 작성한 내용은 사라집니다.\n계속 이동할까요?",
-                    "이동 확인",
+                    "",
                     MessageBoxButton.YesNo,
                     MessageBoxImage.Warning);
 

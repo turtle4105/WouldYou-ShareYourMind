@@ -8,6 +8,7 @@
         
         <!--Converters -->
         <conv:BoolToVisibilityConverter x:Key="BoolToVis"/>
+        <conv:EqualityMultiConverter x:Key="Eq2"/>
 
         <!-- =========== Colors / Brushes =========== -->
         <Color x:Key="Clr.Bg">#0B0F1A</Color>
@@ -19,7 +20,7 @@
         <Color x:Key="Clr.Sky">#6C96AB</Color>
         <Color x:Key="Clr.Gray">#9EA1B5</Color>
         <Color x:Key="Clr.DarkGray">#585868</Color>
-        <Color x:Key="Clr.White">#FFFFFF</Color>
+        <Color x:Key="Clr.White">#F7F7F7</Color>
 
         <SolidColorBrush x:Key="Brush.Bg" Color="{StaticResource Clr.Bg}"/>
         <SolidColorBrush x:Key="Brush.Panel" Color="{StaticResource Clr.Panel}"/>
@@ -39,7 +40,6 @@
         </LinearGradientBrush>
 
         <!-- 투명도는 GradientStop.Opacity로 -->
-        <!-- 추가: 알파 포함 컬러 -->
         <Color x:Key="Clr.Mint40">#668ED7D6</Color>
         <!-- 0x66(≈40%) + 8ED7D6 -->
         <Color x:Key="Clr.Purple40">#664F24A9</Color>
@@ -145,6 +145,78 @@
                 </Setter.Value>
             </Setter>
         </Style>
+
+        <!-- ===== Night Accent (dimmer, softer) ===== -->
+        <Color x:Key="Clr.Mint.Night">#5FB8B7</Color>
+        <!-- 기존 민트보다 채도/밝기 ↓ -->
+        <Color x:Key="Clr.Purple.Night">#3D1E85</Color>
+        <!-- 보라 톤도 진하고 어둡게 -->
+        <!-- 약간 투명한 스탑으로 더 소프트하게 -->
+        <LinearGradientBrush x:Key="Grad.Accent.Night" StartPoint="0,0" EndPoint="1,0">
+            <GradientStop Color="{StaticResource Clr.Mint.Night}"   Offset="0.00"/>
+            <GradientStop Color="{StaticResource Clr.Purple.Night}" Offset="1.00"/>
+        </LinearGradientBrush>
+
+        <!-- 핼로우/글로우도 아주 은은하게 -->
+        <SolidColorBrush x:Key="Brush.Primary.Fg.Night" Color="#F0FFFFFF"/>
+        <!-- 완전 흰색보다 살짝 톤다운 -->
+
+        <!-- Night 전용 Primary 버튼 -->
+        <Style x:Key="Btn.Primary.Night" TargetType="Button">
+            <Setter Property="Foreground" Value="{StaticResource Brush.Primary.Fg.Night}"/>
+            <Setter Property="Background" Value="{StaticResource Grad.Accent.Night}"/>
+            <Setter Property="Padding" Value="12,10"/>
+            <Setter Property="FontWeight" Value="SemiBold"/>
+            <Setter Property="BorderThickness" Value="0"/>
+            <Setter Property="HorizontalAlignment" Value="Center"/>
+            <Setter Property="MinWidth" Value="180"/>
+            <Setter Property="Effect">
+                <!-- 아주 옅은 주변광 -->
+                <Setter.Value>
+                    <DropShadowEffect Color="#2033D1C8" BlurRadius="8" ShadowDepth="0" Opacity="0.6"/>
+                </Setter.Value>
+            </Setter>
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="Button">
+                        <Border CornerRadius="{StaticResource Cr.Pill}" Background="{TemplateBinding Background}">
+                            <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center" Margin="8,2"/>
+                        </Border>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+
+            <!-- 상태(호버/프레스/비활성) -->
+            <Style.Triggers>
+                <Trigger Property="IsMouseOver" Value="True">
+                    <Setter Property="Background">
+                        <Setter.Value>
+                            <LinearGradientBrush StartPoint="0,0" EndPoint="1,0">
+                                <GradientStop Color="{StaticResource Clr.Mint.Night}"   Offset="0" />
+                                <GradientStop Color="{StaticResource Clr.Purple.Night}" Offset="1" />
+                            </LinearGradientBrush>
+                        </Setter.Value>
+                    </Setter>
+                </Trigger>
+                <Trigger Property="IsPressed" Value="True">
+                    <Setter Property="Background">
+                        <Setter.Value>
+                            <LinearGradientBrush StartPoint="0,0" EndPoint="1,0">
+                                <!-- 프레스 시는 명도 살짝 ↓로 눌리는 느낌 -->
+                                <GradientStop Color="#53A7A6" Offset="0"/>
+                                <GradientStop Color="#371A78" Offset="1"/>
+                            </LinearGradientBrush>
+                        </Setter.Value>
+                    </Setter>
+                </Trigger>
+                <Trigger Property="IsEnabled" Value="False">
+                    <Setter Property="Background" Value="{StaticResource Brush.PanelAlt}"/>
+                    <Setter Property="Foreground" Value="{StaticResource Brush.DarkGray}"/>
+                    <Setter Property="Effect" Value="{x:Null}"/>
+                </Trigger>
+            </Style.Triggers>
+        </Style>
+
 
         <!-- =========== DataTemplates =========== -->
         <DataTemplate DataType="{x:Type vm:HomeViewModel}">

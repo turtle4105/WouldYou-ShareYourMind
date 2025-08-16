@@ -93,9 +93,10 @@
 
         <!-- 제출 버튼 -->
         <Button Grid.Row="10"
-                Style="{StaticResource Btn.Primary}"
-                Command="{Binding SubmitCommand}"
-                MinWidth="200" Padding="12,10" Height="40" Margin="0,0,0,10">
+        Style="{StaticResource Btn.Primary.Night}"
+        Command="{Binding SubmitCommand}"
+        Margin="0,0,0,20"
+        MinWidth="200" Padding="12,10" Height="40">
             <StackPanel Orientation="Horizontal" HorizontalAlignment="Center">
                 <TextBlock Text="✦" Margin="0,0,6,0"/>
                 <TextBlock Text="마음 나누기" FontSize="15"/>
