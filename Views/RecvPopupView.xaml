@@ -35,7 +35,7 @@
                    Style="{StaticResource Txt.Title}"
                    FontSize="18"
                    TextAlignment="Center"
-                   Text="마음이 우주에 닿았어요." />
+                   Text="마음이 우주에 닿았어요" />
 
         <!-- 메시지 카드 -->
         <Border Grid.Row="4"
@@ -50,7 +50,7 @@
         <!-- 버튼 2개 사이 여백은 첫 번째 버튼의 오른쪽 Margin으로 -->
         <StackPanel Grid.Row="6" Orientation="Horizontal" HorizontalAlignment="Center">
             <Button Style="{StaticResource Btn.Primary}"
-            Command="{Binding GoSleepModeCommand}"
+            Command="{Binding DataContext.GoSleepCommand, RelativeSource={RelativeSource AncestorType=Window}}"
             Padding="14,8" MinWidth="120" Height="40"
             Margin="0,0,12,0">
                 <StackPanel Orientation="Horizontal">
@@ -60,18 +60,17 @@
             </Button>
 
             <Button Style="{StaticResource Btn.Secondary}"
-            Command="{Binding ClosePopupCommand}"
+            Command="{Binding DataContext.GoHomeCommand, RelativeSource={RelativeSource AncestorType=Window}}"
             Padding="14,8" MinWidth="80" Height="40">
                 닫기
             </Button>
         </StackPanel>
 
         <Image Source="/Resources/images/twinkle.png"
-           Width="88" Height="104"
+           Width="88" Height="110"
            HorizontalAlignment="Left"
            VerticalAlignment="Top"
-           Margin="235,15,0,0"
-           IsHitTestVisible="False"
-            Grid.RowSpan="4"/>
+           Margin="236,10,0,0"
+           IsHitTestVisible="False" Grid.RowSpan="4"/>
     </Grid>
 </UserControl>
