@@ -36,39 +36,46 @@
                    Margin="0,0,0,0"/>
 
         <!-- 에디터 카드 -->
+        <!-- 에디터 카드 -->
         <Border Grid.Row="4"
-                Style="{StaticResource Card.Editor}"
-                Background="{StaticResource Brush.Panel}">
+        Style="{StaticResource Card.Editor}"
+        Background="{StaticResource Brush.Panel}"
+        MinHeight="260"        
+            VerticalAlignment="Stretch">
             <Grid>
                 <!-- 텍스트 박스 -->
                 <TextBox x:Name="InputBox"
-                         Text="{Binding Content, UpdateSourceTrigger=PropertyChanged, Delay=50}"
-                         AcceptsReturn="True" TextWrapping="Wrap"
-                         BorderThickness="0" Background="Transparent"
-                         Foreground="{StaticResource Brush.Text}"
-                         CaretBrush="{StaticResource Brush.Text}"
-                         ScrollViewer.VerticalScrollBarVisibility="Hidden"
-                         MaxLength="800"/>
-
-                <!-- 플레이스홀더 -->
-                <TextBlock Text="하고 싶은 이야기를 마음껏 털어놔 주세요."
+                 Text="{Binding Content, UpdateSourceTrigger=PropertyChanged, Delay=50}"
+                 AcceptsReturn="True"
+                 TextWrapping="Wrap"
+                 BorderThickness="0"
+                 Background="Transparent"
+                 Foreground="{StaticResource Brush.Text}"
+                 CaretBrush="{StaticResource Brush.Text}"
+                 VerticalAlignment="Stretch"
+                 ScrollViewer.VerticalScrollBarVisibility="Auto" 
+                    ScrollViewer.HorizontalScrollBarVisibility="Disabled"
+                 MaxLength="800"
+                 Margin="2"/>
+                    <!-- 플레이스홀더 -->
+                    <TextBlock Text="하고 싶은 이야기를 마음껏 털어놔 주세요."
                    HorizontalAlignment="Center"
                    VerticalAlignment="Center"
                    IsHitTestVisible="False">
-                    <TextBlock.Style>
-                        <Style TargetType="TextBlock" BasedOn="{StaticResource Txt.Subtitle}">
-                            <Setter Property="Visibility" Value="Collapsed"/>
-                            <Style.Triggers>
-                                <!-- TextBox의 길이가 0일 때만 보이기 -->
-                                <DataTrigger Binding="{Binding ElementName=InputBox, Path=Text.Length}" Value="0">
-                                    <Setter Property="Visibility" Value="Visible"/>
-                                </DataTrigger>
-                            </Style.Triggers>
-                        </Style>
-                    </TextBlock.Style>
-                </TextBlock>
+                        <TextBlock.Style>
+                            <Style TargetType="TextBlock" BasedOn="{StaticResource Txt.Subtitle}">
+                                <Setter Property="Visibility" Value="Collapsed"/>
+                                <Style.Triggers>
+                                    <DataTrigger Binding="{Binding ElementName=InputBox, Path=Text.Length}" Value="0">
+                                        <Setter Property="Visibility" Value="Visible"/>
+                                    </DataTrigger>
+                                </Style.Triggers>
+                            </Style>
+                        </TextBlock.Style>
+                    </TextBlock>
             </Grid>
         </Border>
+
 
         <!-- 공개 / 글자수 -->
         <Grid Grid.Row="6">

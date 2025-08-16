@@ -12,6 +12,7 @@
   <ItemGroup>
     <None Remove="Resources\images\dot.png" />
     <None Remove="Resources\images\dot_2.png" />
+    <None Remove="Resources\images\galaxy.png" />
     <None Remove="Resources\images\Home_Release.png" />
     <None Remove="Resources\images\Home_sleep.png" />
     <None Remove="Resources\images\Home_SM.png" />
@@ -33,6 +34,7 @@
   <ItemGroup>
     <Resource Include="Resources\images\dot.png" />
     <Resource Include="Resources\images\dot_2.png" />
+    <Resource Include="Resources\images\galaxy.png" />
     <Resource Include="Resources\images\Home_Release.png" />
     <Resource Include="Resources\images\Home_sleep.png" />
     <Resource Include="Resources\images\Home_SM.png" />

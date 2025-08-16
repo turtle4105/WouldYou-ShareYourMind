@@ -27,7 +27,7 @@
         <!-- 타이틀 -->
         <TextBlock Grid.Row="0"
                    Style="{StaticResource Txt.Subtitle}"
-                   FontSize="16"
+                   FontSize="14"
                    Margin="0,15,0,20"
                    TextAlignment="Center"
                    Text="잠시 머문 마음을 고를게요."/>
