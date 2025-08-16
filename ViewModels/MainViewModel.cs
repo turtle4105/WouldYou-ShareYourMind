@@ -44,12 +44,14 @@ namespace WouldYou_ShareMind.ViewModels
         }
 
         // 네비게이션 헬퍼
-        public void Navigate<TVM>(NavTab tab) where TVM : class
+        public void Navigate<TVM>(NavTab tab, bool skipDiscardCheck = false, Action<TVM>? init = null)
+            where TVM : class
         {
-            // 이동 전 확인
-            if (!ConfirmDiscardIfNeeded(tab)) return;
+            if (!skipDiscardCheck && !ConfirmDiscardIfNeeded(tab)) return;
 
             var vm = (TVM)_vmFactory(typeof(TVM));
+            init?.Invoke(vm);
+
             ShowNavBar = typeof(TVM) != typeof(RecvPopupViewModel);
             ActiveTab = tab;
             CurrentView = vm;

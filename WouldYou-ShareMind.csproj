@@ -27,6 +27,7 @@
     <None Remove="Resources\images\soundsetting.png" />
     <None Remove="Resources\images\theme.png" />
     <None Remove="Resources\images\timer.png" />
+    <None Remove="Resources\images\twinkle.png" />
   </ItemGroup>
 
   <ItemGroup>
@@ -54,6 +55,7 @@
     <Resource Include="Resources\images\soundsetting.png" />
     <Resource Include="Resources\images\theme.png" />
     <Resource Include="Resources\images\timer.png" />
+    <Resource Include="Resources\images\twinkle.png" />
   </ItemGroup>
 
 </Project>

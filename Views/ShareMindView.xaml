@@ -36,7 +36,6 @@
                    Margin="0,0,0,0"/>
 
         <!-- 에디터 카드 -->
-        <!-- 에디터 카드 -->
         <Border Grid.Row="4"
         Style="{StaticResource Card.Editor}"
         Background="{StaticResource Brush.Panel}"

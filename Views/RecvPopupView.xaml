@@ -1,0 +1,77 @@
+﻿<UserControl x:Class="WouldYou_ShareMind.Views.RecvPopupView"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             mc:Ignorable="d"
+             d:DesignWidth="400" d:DesignHeight="750">
+
+    <Grid Margin="20,24,20,12">
+
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <!-- 상단 이미지 -->
+            <RowDefinition Height="20"/>
+            <RowDefinition Height="Auto"/>
+            <!-- 타이틀 -->
+            <RowDefinition Height="20"/>
+            <RowDefinition Height="*"/>
+            <!-- 메시지 영역 -->
+            <RowDefinition Height="20"/>
+            <RowDefinition Height="Auto"/>
+            <!-- 버튼 -->
+        </Grid.RowDefinitions>
+
+        <!-- 우측 상단 반짝이 -->
+        <Image 
+               Width="60" Height="60"
+               HorizontalAlignment="Right"
+               VerticalAlignment="Top"
+               Margin="0,0,0,0"
+               Grid.Row="0"/>
+
+        <!-- 타이틀 -->
+        <TextBlock Grid.Row="2"
+                   Style="{StaticResource Txt.Title}"
+                   FontSize="18"
+                   TextAlignment="Center"
+                   Text="마음이 우주에 닿았어요." />
+
+        <!-- 메시지 카드 -->
+        <Border Grid.Row="4"
+                Style="{StaticResource Card.Panel}"
+                Background="Transparent"
+                Padding="16" Margin="0,0,0,0">
+            <TextBlock Style="{StaticResource Txt.Body}"
+                       TextAlignment="Center"
+                       LineHeight="20"><Run Text="무거운 생각들이 블랙홀을 지나 멀리 사라지고 "/><Run Language="ko-kr" Text=" "/><Run Text="있어요. 남은 건 가벼운 빛과 따뜻한 숨뿐이에요. "/><Run Language="ko-kr" Text="  "/><Run Text="수천억 개의 별들이 빛나는 은하가 당신의 마음을 부드럽게 감싸고 있어요. 그 안에서 모든 걱정이 천천히 녹아내립니다."/></TextBlock>
+        </Border>
+
+        <!-- 버튼 2개 사이 여백은 첫 번째 버튼의 오른쪽 Margin으로 -->
+        <StackPanel Grid.Row="6" Orientation="Horizontal" HorizontalAlignment="Center">
+            <Button Style="{StaticResource Btn.Primary}"
+            Command="{Binding GoSleepModeCommand}"
+            Padding="14,8" MinWidth="120" Height="40"
+            Margin="0,0,12,0">
+                <StackPanel Orientation="Horizontal">
+                    <TextBlock Text="🌙" Margin="0,0,6,0"/>
+                    <TextBlock Text="수면 모드"/>
+                </StackPanel>
+            </Button>
+
+            <Button Style="{StaticResource Btn.Secondary}"
+            Command="{Binding ClosePopupCommand}"
+            Padding="14,8" MinWidth="80" Height="40">
+                닫기
+            </Button>
+        </StackPanel>
+
+        <Image Source="/Resources/images/twinkle.png"
+           Width="88" Height="104"
+           HorizontalAlignment="Left"
+           VerticalAlignment="Top"
+           Margin="235,15,0,0"
+           IsHitTestVisible="False"
+            Grid.RowSpan="4"/>
+    </Grid>
+</UserControl>

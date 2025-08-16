@@ -57,7 +57,7 @@
                    Style="{StaticResource Txt.Subtitle}"
                    TextAlignment="Center"
                    Margin="0,15,0,15"
-                   Text="우주 여정을 위한 환경을 조성하세요." />
+                   Text="편안한 밤을 위한 나만의 설정을 골라보세요." />
 
         <!-- 항목들 -->
         <StackPanel Grid.Row="4">
