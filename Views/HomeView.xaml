@@ -1,11 +1,189 @@
 ﻿<UserControl x:Class="WouldYou_ShareMind.Views.HomeView"
-      xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
-      xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-      xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
-      xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
-      xmlns:local="clr-namespace:WouldYou_ShareMind.Views"
-      mc:Ignorable="d" 
-      d:DesignHeight="800" d:DesignWidth="400">
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    mc:Ignorable="d"
+    d:DesignHeight="750" d:DesignWidth="400">
 
-    <Grid/>
+    <!-- 화면 여백만 두고, 색/폰트/스타일은 전부 App.xaml 리소스 사용 -->
+    <Grid Margin="20,24,20,12">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <!-- 로고 -->
+            <RowDefinition Height="16"/>
+            <RowDefinition Height="Auto"/>
+            <!-- 섹션 제목 -->
+            <RowDefinition Height="8"/>
+            <RowDefinition Height="Auto"/>
+            <!-- 한 줄 메시지 -->
+            <RowDefinition Height="20"/>
+            <RowDefinition Height="Auto"/>
+            <!-- 3 카드 -->
+            <RowDefinition Height="28"/>
+            <RowDefinition Height="Auto"/>
+            <!-- 최근 기록 헤더 -->
+            <RowDefinition Height="8"/>
+            <RowDefinition Height="*"/>
+            <!-- 최근 리스트 -->
+        </Grid.RowDefinitions>
+
+        <!-- 상단 로고 (리소스에 등록된 이미지) -->
+        <Image Grid.Row="0"
+               Source="pack://application:,,,/Resources/images/logo.png"
+               Width="230"
+               HorizontalAlignment="Center"
+               Margin="2,30,0,2"/>
+
+        <!-- 섹션 제목 -->
+        <TextBlock Grid.Row="2"
+                   Style="{StaticResource Txt.Title}"
+                   FontSize="16" FontWeight="SemiBold"
+                   HorizontalAlignment="Center"
+                   Margin="0,10,0,0"
+                   Text="오늘의 별빛 메시지"/>
+
+        <!-- 한 줄 메시지 -->
+        <TextBlock Grid.Row="4"
+                   Style="{StaticResource Txt.Subtitle}"
+                   Text="{Binding SpotlightMessage}"
+                   TextAlignment="Center"
+                   Margin="0,0,0,15"/>
+
+        <!-- 기능 카드 3개 -->
+        <UniformGrid Grid.Row="6" Rows="1" Columns="3" Margin="0,8,0,0">
+            <!-- 공통: 카드 내부 StackPanel -->
+            <UniformGrid.Resources>
+                <Style x:Key="CardTitle" TargetType="TextBlock" BasedOn="{StaticResource Txt.Body}">
+                    <Setter Property="FontSize" Value="12"/>
+                    <Setter Property="FontWeight" Value="SemiBold"/>
+                    <Setter Property="HorizontalAlignment" Value="Center"/>
+                    <Setter Property="Margin" Value="0,8,0,0"/>
+                </Style>
+                <!-- App.xaml의 Card.Panel 룩을 버튼에 입히기 -->
+                <Style x:Key="CardButton" TargetType="Button">
+                    <!-- 버튼이 칸을 꽉 채우도록 -->
+                    <Setter Property="HorizontalAlignment" Value="Stretch"/>
+                    <Setter Property="VerticalAlignment" Value="Stretch"/>
+                    <Setter Property="HorizontalContentAlignment" Value="Stretch"/>
+                    <Setter Property="VerticalContentAlignment" Value="Stretch"/>
+
+                    <!-- 세로 길이 ↑ -->
+                    <Setter Property="MinHeight" Value="120"/>
+                    <!-- 기존 대비 2배 느낌 -->
+                    <Setter Property="Padding" Value="16,24"/>
+                    <!-- 위/아래 패딩 늘려서 여백 확보 -->
+
+                    <Setter Property="Margin" Value="4,0"/>
+                    <Setter Property="Background" Value="{StaticResource Brush.Panel}"/>
+                    <Setter Property="BorderBrush" Value="{StaticResource Grad.Border}"/>
+                    <Setter Property="BorderThickness" Value="1.4"/>
+
+                    <Setter Property="Template">
+                        <Setter.Value>
+                            <ControlTemplate TargetType="Button">
+                                <Border CornerRadius="{StaticResource Cr.Card}"
+                        Background="{TemplateBinding Background}"
+                        BorderBrush="{TemplateBinding BorderBrush}"
+                        BorderThickness="{TemplateBinding BorderThickness}">
+                                    <!-- 내용은 중앙 정렬 -->
+                                    <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                                </Border>
+                            </ControlTemplate>
+                        </Setter.Value>
+                    </Setter>
+                </Style>
+            </UniformGrid.Resources>
+
+            <!-- 마음 나누기 -->
+            <Button Style="{StaticResource CardButton}"
+                    Command="{Binding DataContext.GoShare, RelativeSource={RelativeSource AncestorType=Window}}">
+                <StackPanel>
+                    <Image Source="/Resources/images/Home_SM.png"
+                           Width="60" Height="60" HorizontalAlignment="Center"/>
+                    <TextBlock Text="마음 나누기" Style="{StaticResource CardTitle}" FontSize="14"/>
+                </StackPanel>
+            </Button>
+
+            <!-- 흘려보내기 (우선 Share로 이동) -->
+            <Button Style="{StaticResource CardButton}"
+                    Command="{Binding DataContext.GoShare, RelativeSource={RelativeSource AncestorType=Window}}">
+                <StackPanel>
+                    <Image Source="/Resources/images/Home_Release.png"
+                           Width="55" Height="55" HorizontalAlignment="Center"/>
+                    <TextBlock Text="흘려보내기" Style="{StaticResource CardTitle}" FontSize="14"/>
+                </StackPanel>
+            </Button>
+
+            <!-- 수면 모드 -->
+            <Button Style="{StaticResource CardButton}"
+                    Command="{Binding DataContext.GoSleep, RelativeSource={RelativeSource AncestorType=Window}}">
+                <StackPanel>
+                    <Image Source="/Resources/images/Home_Sleep.png"
+                           Width="55" Height="55" HorizontalAlignment="Center"/>
+                    <TextBlock Text="수면 모드" Style="{StaticResource CardTitle}" FontSize="14"/>
+                </StackPanel>
+            </Button>
+        </UniformGrid>
+
+        <!-- 최근 기록 헤더 -->
+        <Grid Grid.Row="8" Margin="0,8,0,0">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="Auto"/>
+            </Grid.ColumnDefinitions>
+
+            <TextBlock Grid.Column="0"
+               Text="최근 기록 미리보기"
+               Style="{StaticResource Txt.Body}"
+               FontSize="14"
+               VerticalAlignment="Center"/>
+
+            <Button Grid.Column="1"
+            Content="보관함 전체보기"
+            Style="{StaticResource Btn.Secondary}"
+            FontSize="12"
+            Padding="12,6"
+            Command="{Binding DataContext.GoArchive, RelativeSource={RelativeSource AncestorType=Window}}" Height="30"/>
+        </Grid>
+
+
+        <!-- 최근 기록 리스트 -->
+        <ListView Grid.Row="10"
+          ItemsSource="{Binding RecentMindLogs}"
+          BorderThickness="0"
+          Background="Transparent"
+          Margin="0,4,0,0">
+            <ListView.ItemContainerStyle>
+                <Style TargetType="ListViewItem">
+                    <Setter Property="Padding" Value="0"/>
+                    <Setter Property="Margin"  Value="0,10,0,6"/>
+                    <Setter Property="Background" Value="Transparent"/>
+                    <Setter Property="BorderThickness" Value="0"/>
+                </Style>
+            </ListView.ItemContainerStyle>
+            <ListView.ItemTemplate>
+                <DataTemplate>
+                    <Grid>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="Auto"/>
+                            <ColumnDefinition Width="10"/>
+                            <ColumnDefinition Width="*"/>
+                        </Grid.ColumnDefinitions>
+                        <TextBlock Grid.Column="0"
+                           Style="{StaticResource Txt.Subtitle}"
+                           FontSize="12"
+                           Text="{Binding DateText}"/>
+                        <TextBlock Grid.Column="1" Text=""/>
+                        <TextBlock Grid.Column="2"
+                           Style="{StaticResource Txt.Body}"
+                           FontSize="12"
+                           Foreground="{StaticResource Brush.Gray}"
+                           TextTrimming="CharacterEllipsis"
+                           Text="{Binding Summary}"/>
+                    </Grid>
+                </DataTemplate>
+            </ListView.ItemTemplate>
+        </ListView>
+    </Grid>
 </UserControl>

@@ -23,6 +23,7 @@ namespace WouldYou_ShareMind.Views
         public SleepModeView()
         {
             InitializeComponent();
+            Console.WriteLine("SleepModeView 생성");
         }
     }
 }

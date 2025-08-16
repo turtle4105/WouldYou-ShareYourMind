@@ -23,6 +23,8 @@ namespace WouldYou_ShareMind.Views
         public ArchiveView()
         {
             InitializeComponent();
+            Console.WriteLine("ArchiveView 생성");
+            
         }
     }
 }

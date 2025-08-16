@@ -16,13 +16,14 @@ using System.Windows.Shapes;
 namespace WouldYou_ShareMind.Views
 {
     /// <summary>
-    /// RecvPopupPage.xaml에 대한 상호 작용 논리
+    /// RecvPopupView.xaml에 대한 상호 작용 논리
     /// </summary>
-    public partial class RecvPopupPage : UserControl
+    public partial class RecvPopupView : UserControl
     {
-        public RecvPopupPage()
+        public RecvPopupView()
         {
             InitializeComponent();
+            Console.WriteLine("RecvPopupView 생성");
         }
     }
 }

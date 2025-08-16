@@ -159,7 +159,7 @@
             <views:SettingView/>
         </DataTemplate>
         <DataTemplate DataType="{x:Type vm:RecvPopupViewModel}">
-            <views:RecvPopupPage/>
+            <views:RecvPopupView/>
         </DataTemplate>
     </Application.Resources>
 </Application>

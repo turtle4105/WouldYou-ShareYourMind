@@ -14,17 +14,6 @@ namespace WouldYou_ShareMind
         public App()
         {
             InitializeComponent();
-
-            // 전역 예외 표시(창이 안 뜨는 원인 파악용)
-            this.DispatcherUnhandledException += (s, e) =>
-            {
-                MessageBox.Show(e.Exception.ToString(), "UI Thread Exception");
-                e.Handled = true;
-            };
-            AppDomain.CurrentDomain.UnhandledException += (s, e) =>
-            {
-                MessageBox.Show(e.ExceptionObject?.ToString() ?? "Unknown", "Domain Unhandled");
-            };
         }
 
         protected override void OnStartup(StartupEventArgs e)
@@ -64,7 +53,7 @@ namespace WouldYou_ShareMind
                 var win = new MainWindow { DataContext = mainVM };
                 win.Show();
 
-                // 홈으로 진입(중요: NavTab 인자 필요)
+                // 홈으로 진입
                 mainVM.Navigate<HomeViewModel>(ViewModels.NavTab.Home);
             }
             catch (Exception ex)

@@ -23,6 +23,7 @@ namespace WouldYou_ShareMind.Views
         public ShareMindView()
         {
             InitializeComponent();
+            Console.WriteLine("ShareMindView 생성");
         }
     }
 }

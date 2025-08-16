@@ -23,6 +23,7 @@ namespace WouldYou_ShareMind.Views
         public HomeView()
         {
             InitializeComponent();
+            Console.WriteLine("HomeView 생성");
         }
     }
 }
