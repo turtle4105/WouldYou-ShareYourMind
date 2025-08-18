@@ -24,9 +24,11 @@ namespace WouldYou_ShareMind.Services
         Task<List<T>> QueryAsync<T>(string sql, Func<Microsoft.Data.Sqlite.SqliteDataReader, T> map, params object[] args);
 
         // ===== 편의 메서드(MVP) =====
-        Task<long> InsertMindLogAsync(string content, string? aiReply, int isLetGo = 0);
+        Task<int> InsertMindAsync(string content, string? aiReply, bool isLetGo = false);
         Task<long> InsertSleepLogStartAsync(int durationMin);
         Task<int> UpdateSleepLogEndAsync(long id);
         Task<long> InsertBreathingLogAsync(int durationSec, int sampleRate, double? brBpm, double? stability, string? badge);
+
+        Task<IReadOnlyList<MindLogPreviewDto>> GetRecentMindAsync(int limit);
     }
 }

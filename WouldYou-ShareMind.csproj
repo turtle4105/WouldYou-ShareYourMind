@@ -10,6 +10,8 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <None Remove="Data\.gitkeep" />
+    <None Remove="Data\app.db" />
     <None Remove="Resources\images\breathe.png" />
     <None Remove="Resources\images\dot.png" />
     <None Remove="Resources\images\dot_2.png" />
@@ -28,6 +30,15 @@
     <None Remove="Resources\images\theme.png" />
     <None Remove="Resources\images\timer.png" />
     <None Remove="Resources\images\twinkle.png" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Content Include="Data\.gitkeep">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Data\app.db">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
   </ItemGroup>
 
   <ItemGroup>

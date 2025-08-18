@@ -1,10 +1,14 @@
 ﻿using CommunityToolkit.Mvvm.ComponentModel;
+using NAudio.MediaFoundation;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using System.Globalization;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+// DB를 위한 추가 using
+using WouldYou_ShareMind.Services;
 
 namespace WouldYou_ShareMind.ViewModels
 {
@@ -25,32 +29,45 @@ namespace WouldYou_ShareMind.ViewModels
         public ObservableCollection<MindLogPreview> RecentMindLogs { get; } =
             new ObservableCollection<MindLogPreview>();
 
-        public HomeViewModel()
+        private readonly IDbService _db;
+        public HomeViewModel(IDbService db)
         {
-            // 임시 데이터 3개
-            RecentMindLogs.Add(new MindLogPreview
+           _db = db;
+            Console.WriteLine("[HOME] ctor");
+            _ = LoadAsync();   // 생성 시 데이터 불러오기
+
+        }
+
+        private async Task LoadAsync()
+        {
+            Console.WriteLine("[HOME] LoadAsync start");
+
+            RecentMindLogs.Clear();
+
+            var dtos = await _db.GetRecentMindAsync(limit: 3);
+
+            var ko = CultureInfo.GetCultureInfo("ko-KR");
+            foreach (var dto in dtos)
             {
-                DateText = "2025.08.08 (금)",
-                Summary = "작은 실수 하나가 자꾸 마음에 남아요"
-            });
-            RecentMindLogs.Add(new MindLogPreview
-            {
-                DateText = "2025.08.06 (수)",
-                Summary = "오늘은 내가 참 잘했다는 느낌이었어요"
-            });
-            RecentMindLogs.Add(new MindLogPreview
-            {
-                DateText = "2025.08.04 (일)",
-                Summary = "새로운 시작이 설레면서도 두려워요"
-            });
+                var dateTxt = dto.CreatedAt == DateTime.MinValue
+                    ? ""
+                    : $"{dto.CreatedAt:yyyy.MM.dd} ({ko.DateTimeFormat.GetDayName(dto.CreatedAt.DayOfWeek)[0]})";
+
+                // 요약: content 우선, 비어있으면 ai_reply 사용
+                var raw = string.IsNullOrWhiteSpace(dto.Content) ? (dto.AiReply ?? "") : dto.Content;
+                var summary = raw.Replace("\r", " ").Replace("\n", " ").Trim();
+                if (summary.Length > 28) summary = summary[..28] + "…";
+
+                RecentMindLogs.Add(new MindLogPreview
+                {
+                    DateText = dateTxt,
+                    Summary = summary
+                });
+            }
+
+            Console.WriteLine($"[HOME] list bound count: {RecentMindLogs.Count}");
         }
     }
-
-
-    /*최근 기록 리스틔의 목록 3개*/
-    //public ObservableCollection<MindLogPreview> RecentMindLogs { get; }
-    //= new ObservableCollection<MindLogPreview>(
-    //    allLogs.OrderByDescending(x => x.Date).Take(3));
 
 
 }

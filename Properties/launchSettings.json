@@ -1,0 +1,10 @@
+{
+  "profiles": {
+    "WouldYou-ShareMind": {
+      "commandName": "Project",
+      "environmentVariables": {
+        "OPENAI_API_KEY": ""
+      }
+    }
+  }
+}
