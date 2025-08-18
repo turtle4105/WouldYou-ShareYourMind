@@ -30,8 +30,8 @@
         <TextBlock Grid.Row="2"
                    Style="{StaticResource Txt.Subtitle}"
                    TextAlignment="Center"
-                   Margin="0,15,0,0"
-                   Text="잠시 후 우주가 당신을 재워줄 거예요."
+                   Margin="4,35,-4,4"
+                   Text="잠시 후 우주가 당신을 재워줄 거예요." Grid.RowSpan="2"
                    />
 
         <!-- 은하 이미지-->
@@ -40,7 +40,7 @@
                    Source="/Resources/images/galaxy.png"
                    Width="260" Height="200"
                    HorizontalAlignment="Center" VerticalAlignment="Top"
-                   RenderTransformOrigin="0.5,0.5" Margin="0,90,0,0">
+                   RenderTransformOrigin="0.5,0.5" Margin="0,126,0,0">
                 <Image.RenderTransform>
                     <ScaleTransform x:Name="GalaxyScale" ScaleX="1" ScaleY="1"/>
                 </Image.RenderTransform>
@@ -67,59 +67,8 @@
             </Grid.Triggers>
         </Grid>
 
-        <!-- 컨트롤 버튼 -->
-        <StackPanel Grid.Row="6" Orientation="Horizontal" HorizontalAlignment="Center" >
-            <!-- 일시정지/재생 토글 -->
-            <Button Style="{StaticResource Btn.Secondary}"
-                    Padding="14,8" Margin="0,0,10,0"
-                    Command="{Binding TogglePauseCommand}">
-                <StackPanel Orientation="Horizontal" VerticalAlignment="Center">
-                    <TextBlock Margin="0,0,6,0" Height="16">
-                        <TextBlock.Style>
-                            <Style TargetType="TextBlock">
-                                <Setter Property="Text" Value="⏸"/>
-                                <Style.Triggers>
-                                    <DataTrigger Binding="{Binding IsPaused}" Value="True">
-                                        <Setter Property="Text" Value="▶"/>
-                                    </DataTrigger>
-                                </Style.Triggers>
-                            </Style>
-                        </TextBlock.Style>
-                    </TextBlock>
-                    <TextBlock VerticalAlignment="Center">
-                        <TextBlock.Style>
-                            <Style TargetType="TextBlock" BasedOn="{StaticResource Txt.Body}">
-                                <Setter Property="Text" Value="일시정지"/>
-                                <Setter Property="Height" Value="25"/>
-                                <Setter Property="HorizontalAlignment" Value="Center"/>
-                                <Setter Property="TextAlignment" Value="Center"/>
-                                <!-- ⬇️ 세로 중앙 정렬의 핵심 -->
-                                <Setter Property="LineStackingStrategy" Value="BlockLineHeight"/>
-                                <Setter Property="LineHeight" Value="25"/>
-                                <Style.Triggers>
-                                    <DataTrigger Binding="{Binding IsPaused}" Value="True">
-                                        <Setter Property="Text" Value="재생"/>
-                                    </DataTrigger>
-                                </Style.Triggers>
-                            </Style>
-                        </TextBlock.Style>
-                    </TextBlock>
-                </StackPanel>
-            </Button>
-
-            <!-- 종료 -->
-            <Button Style="{StaticResource Btn.Secondary}"
-                    Padding="16,8"
-                    Command="{Binding StopCommand}">
-                <StackPanel Orientation="Horizontal" VerticalAlignment="Center">
-                    <TextBlock Text="◼" Margin="0,0,6,0"/>
-                    <TextBlock Text="종료" Style="{StaticResource Txt.Body}"/>
-                </StackPanel>
-            </Button>
-        </StackPanel>
-
         <!-- 안내 문구 -->
-        <StackPanel Grid.Row="8" Margin="0,2,0,0">
+        <StackPanel Grid.Row="6" Margin="0,2,0,0">
             <TextBlock Style="{StaticResource Txt.Body}"
                        TextAlignment="Center"
                        Text="당신이 잠들면, 우주의 소리는 조용히 사라집니다."/>

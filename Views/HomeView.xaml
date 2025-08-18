@@ -152,6 +152,7 @@
         <!-- 최근 기록 리스트 -->
         <ListView Grid.Row="10"
           ItemsSource="{Binding RecentMindLogs}"
+          ScrollViewer.HorizontalScrollBarVisibility="Hidden"
           BorderThickness="0"
           Background="Transparent"
           Margin="0,4,0,0">

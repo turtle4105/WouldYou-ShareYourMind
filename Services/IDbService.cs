@@ -25,6 +25,8 @@ namespace WouldYou_ShareMind.Services
 
         // ===== 편의 메서드(MVP) =====
         Task<int> InsertMindAsync(string content, string? aiReply, bool isLetGo = false);
+        Task<int> UpdateMindAiReplyAsync(int id, string aiReply);  
+
         Task<long> InsertSleepLogStartAsync(int durationMin);
         Task<int> UpdateSleepLogEndAsync(long id);
         Task<long> InsertBreathingLogAsync(int durationSec, int sampleRate, double? brBpm, double? stability, string? badge);

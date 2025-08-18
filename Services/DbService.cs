@@ -84,6 +84,21 @@ namespace WouldYou_ShareMind.Services
             return (int)id;
         }
 
+        public async Task<int> UpdateMindAiReplyAsync(int id, string aiReply)
+        {
+            using var conn = new SqliteConnection(_connStr);
+            await conn.OpenAsync();
+
+            var sql = @"UPDATE mind_log SET ai_reply = @p0 WHERE id = @p1;";
+            using var cmd = conn.CreateCommand();
+            cmd.CommandText = sql;
+            cmd.Parameters.AddWithValue("@p0", aiReply);
+            cmd.Parameters.AddWithValue("@p1", id);
+
+            return await cmd.ExecuteNonQueryAsync();
+        }
+
+
         public async Task<IReadOnlyList<MindLogPreviewDto>> GetRecentMindAsync(int limit)
         {
             var list = new List<MindLogPreviewDto>();
