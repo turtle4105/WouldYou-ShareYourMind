@@ -13,6 +13,12 @@
 *.userosscache
 *.sln.docstates
 
+# dotenv files
+appsettings.Development.json
+apikey.txt
+secret.json
+
+
 # User-specific files (MonoDevelop/Xamarin Studio)
 *.userprefs
 

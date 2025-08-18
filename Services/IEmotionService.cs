@@ -11,7 +11,7 @@ namespace WouldYou_ShareMind.Services
     /// </summary>
     public interface IEmotionService
     {
-        //사용자 입력을 보내 공감 응답을 받아온다(실패 시 폴백)
-        Task<string> GetEmpathyAsync(string userText, CancellationToken ct = default);
+        //사용자 입력을 보내 공감 응답을 받아온다
+        Task<string> AnalyzeAsync(string content, bool isPublic, CancellationToken ct = default);
     }
 }
