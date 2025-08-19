@@ -7,43 +7,52 @@
              FontFamily="Noto Sans KR"
              d:DesignWidth="400" d:DesignHeight="750"
              Loaded="OnLoaded"
-             Unloaded="OnUnloaded"
-             >
+             Unloaded="OnUnloaded">
 
     <Grid Margin="20,24,20,50">
         <Grid.RowDefinitions>
             <RowDefinition Height="Auto"/>
-            <!-- 타이틀 -->
+            <!-- 0: 타이틀(미사용시 공간 없음) -->
             <RowDefinition Height="10"/>
+            <!-- 1: 간격 -->
             <RowDefinition Height="Auto"/>
-            <!-- 서브텍스트 -->
+            <!-- 2: 서브텍스트 -->
             <RowDefinition Height="24"/>
+            <!-- 3: 간격 -->
             <RowDefinition Height="*"/>
-            <!-- 은하 이미지 -->
+            <!-- 4: 은하 이미지 -->
             <RowDefinition Height="24"/>
+            <!-- 5: 간격 -->
             <RowDefinition Height="Auto"/>
-            <!-- 컨트롤 버튼 -->
-            <RowDefinition Height="20"/>
+            <!-- 6: 지표(Status/BPM/CV) -->
+            <RowDefinition Height="12"/>
+            <!-- 7: 간격 -->
             <RowDefinition Height="Auto"/>
-            <!-- 안내 문구 -->
+            <!-- 8: 안내 문구 -->
         </Grid.RowDefinitions>
 
+        <!-- (필요시) 타이틀 -->
+        <!--
+        <TextBlock Grid.Row="0"
+                   Style="{StaticResource Txt.Title}"
+                   TextAlignment="Center"
+                   Text="수면 유도 모드" />
+        -->
 
         <!-- 서브 텍스트 -->
         <TextBlock Grid.Row="2"
                    Style="{StaticResource Txt.Subtitle}"
                    TextAlignment="Center"
                    Margin="4,35,-4,4"
-                   Text="잠시 후 우주가 당신을 재워줄 거예요." Grid.RowSpan="2"
-                   />
+                   Text="잠시 후 우주가 당신을 재워줄 거예요." />
 
-        <!-- 은하 이미지-->
+        <!-- 은하 이미지 -->
         <Grid Grid.Row="4">
             <Image x:Name="Galaxy"
                    Source="/Resources/images/galaxy.png"
                    Width="260" Height="200"
                    HorizontalAlignment="Center" VerticalAlignment="Top"
-                   RenderTransformOrigin="0.5,0.5" Margin="0,126,0,0">
+                   RenderTransformOrigin="0.5,0.5" Margin="0,75,0,0">
                 <Image.RenderTransform>
                     <ScaleTransform x:Name="GalaxyScale" ScaleX="1" ScaleY="1"/>
                 </Image.RenderTransform>
@@ -70,8 +79,23 @@
             </Grid.Triggers>
         </Grid>
 
+        <!-- 지표: 상태/호흡수/CV -->
+        <StackPanel Grid.Row="6" Margin="0,0,0,0">
+            <TextBlock Style="{StaticResource Txt.Subtitle}"
+                       TextAlignment="Center"
+                       Text="{Binding StatusText}" />
+            <TextBlock Style="{StaticResource Txt.Subtitle}"
+                       Margin="0,4,0,0"
+                       TextAlignment="Center"
+                       Text="{Binding LastBpm, StringFormat='호흡수 ≈ {0:F1} bpm'}" />
+            <TextBlock Style="{StaticResource Txt.Subtitle}"
+                       Margin="0,2,0,0"
+                       TextAlignment="Center"
+                       Text="{Binding LastCv, StringFormat='변동성(CV) ≈ {0:F2}'}" />
+        </StackPanel>
+
         <!-- 안내 문구 -->
-        <StackPanel Grid.Row="6" Margin="0,2,0,0">
+        <StackPanel Grid.Row="8" Margin="0,2,0,0">
             <TextBlock Style="{StaticResource Txt.Body}"
                        TextAlignment="Center"
                        Text="당신이 잠들면, 우주의 소리는 조용히 사라집니다."/>
