@@ -12,6 +12,8 @@
   <ItemGroup>
     <None Remove="Data\.gitkeep" />
     <None Remove="Data\app.db" />
+    <None Remove="Resources\audio\interstellar_plasma.mp3" />
+    <None Remove="Resources\audio\space_noise.mp3" />
     <None Remove="Resources\images\breathe.png" />
     <None Remove="Resources\images\dot.png" />
     <None Remove="Resources\images\dot_2.png" />
@@ -42,6 +44,12 @@
   </ItemGroup>
 
   <ItemGroup>
+    <Content Include="Resources\audio\interstellar_plasma.mp3">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+  </ItemGroup>
+
+  <ItemGroup>
     <PackageReference Include="CommunityToolkit.Mvvm" Version="8.4.0" />
     <PackageReference Include="Microsoft.Data.Sqlite" Version="9.0.8" />
     <PackageReference Include="Microsoft.Extensions.DependencyInjection" Version="9.0.8" />
@@ -49,6 +57,9 @@
   </ItemGroup>
 
   <ItemGroup>
+    <Content Include="Resources\audio\space_noise.mp3">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
     <Resource Include="Resources\images\breathe.png" />
     <Resource Include="Resources\images\dot.png" />
     <Resource Include="Resources\images\dot_2.png" />

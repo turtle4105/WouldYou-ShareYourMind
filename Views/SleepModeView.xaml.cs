@@ -12,6 +12,7 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
+using WouldYou_ShareMind.ViewModels;
 
 namespace WouldYou_ShareMind.Views
 {
@@ -24,6 +25,18 @@ namespace WouldYou_ShareMind.Views
         {
             InitializeComponent();
             Console.WriteLine("SleepModeView 생성");
+        }
+
+        private async void OnLoaded(object sender, RoutedEventArgs e)
+        {
+            if (DataContext is SleepModeViewModel vm)
+                await vm.StartAsync();     // 진입 즉시 자동 재생
+        }
+
+        private async void OnUnloaded(object sender, RoutedEventArgs e)
+        {
+            if (DataContext is SleepModeViewModel vm)
+                await vm.StopAsync();      // 화면 떠날 때 정리(오디오/DB)
         }
     }
 }

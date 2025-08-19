@@ -4,20 +4,25 @@ using System;
 using System.Collections.ObjectModel;
 using System.Globalization;
 using System.Linq;
+using System.Threading.Tasks;
+using WouldYou_ShareMind.Services;
 
 namespace WouldYou_ShareMind.ViewModels
 {
     public class ArchiveItem
     {
-        public string Title { get; set; } = "";   // ⬅ AI가 뽑아줄 '제목'
-        public string Summary { get; set; } = ""; // 본문/요약
-        public string DateText { get; set; } = "";
+        public int Id { get; set; }
+        public string Title { get; set; } = "";     // 제목(본문에서 잘라 만든 요약 제목)
+        public string Summary { get; set; } = "";   // 본문 전체 또는 요약
+        public string DateText { get; set; } = "";  // yyyy.MM.dd (ddd) HH:mm
+        public string? AiReply { get; set; }        // AI 응답(있다면)
         public bool IsSelected { get; set; }
     }
 
     public partial class ArchiveViewModel : ObservableObject
     {
-        private const int PageSize = 5; // 한 페이지에 5개씩
+        private const int PageSize = 5; // 한 페이지 5개
+        private readonly IDbService _db;
 
         public ObservableCollection<ArchiveItem> AllItems { get; } = new();
         public ObservableCollection<ArchiveItem> Items { get; } = new();
@@ -27,31 +32,36 @@ namespace WouldYou_ShareMind.ViewModels
 
         [ObservableProperty] private ArchiveItem? selectedItem;
 
-        public ArchiveViewModel()
+        public ArchiveViewModel(IDbService db)
         {
-            // --- 더미 10개 ---
-            var dummy = new[]
-            {
-                "작은 실수 하나가 자꾸 마음에 남아요",
-                "오늘은 내가 참 잘했다고 느껴졌어요",
-                "새로운 시작이 설레면서도 두려워요",
-                "걱정이 꼬리에 꼬리를 물어요",
-                "좋아하는 사람과 오랜 시간 대화를 했어요",
-                "아직 정리되지 않은 감정이 복잡해요",
-                "나 자신을 좀 더 믿어주고 싶어요",
-                "꿈에서 깬 듯한 허무함이 있어요",
-                "소중한 순간이 다시 떠올라 기뻤어요",
-                "내일은 더 잘할 수 있기를 바라요",
-            };
+            _db = db;
+            // 시작 시 DB에서 로드
+            _ = LoadFromDbAsync();
+        }
 
-            int day = 8;
-            foreach (var (text, idx) in dummy.Select((t, i) => (t, i)))
+        // ===== 데이터 로드 =====
+        private async Task LoadFromDbAsync()
+        {
+            AllItems.Clear();
+
+            // 필요하면 limit 조정 (예: 200개까지)
+            var rows = await _db.GetRecentMindAsync(limit: 200);
+
+            var ko = CultureInfo.GetCultureInfo("ko-KR");
+            foreach (var r in rows)
             {
+                var created = r.CreatedAt;
+                var title = MakeTitle(r.Content);
+
                 AllItems.Add(new ArchiveItem
                 {
-                    Title = MakeTitle(text), // ⬅ 제목 생성 (간단 규칙/이후 LLM 대체)
-                    Summary = text,
-                    DateText = $"2025.08.{day - idx:D2} ({GetDayOfWeek(idx)}) {23 - idx:00}:{14 + idx:00}"
+                    Id = r.Id,
+                    Title = title,
+                    Summary = r.Content,
+                    AiReply = r.AiReply,
+                    DateText = created == DateTime.MinValue
+                        ? ""
+                        : created.ToString("yyyy.MM.dd (ddd) HH:mm", ko)
                 });
             }
 
@@ -60,13 +70,6 @@ namespace WouldYou_ShareMind.ViewModels
         }
 
         // ===== Helpers =====
-        private string GetDayOfWeek(int offset)
-        {
-            var date = new DateTime(2025, 8, 8).AddDays(-offset);
-            return date.ToString("ddd", CultureInfo.GetCultureInfo("ko-KR"));
-        }
-
-        // 간단 제목 생성: 18자 cut + 말줄임 (Title이 비지 않도록 안전망)
         private string MakeTitle(string? body)
         {
             var t = (body ?? "").Trim();
@@ -80,17 +83,9 @@ namespace WouldYou_ShareMind.ViewModels
             foreach (var item in AllItems.Skip((page - 1) * PageSize).Take(PageSize))
                 Items.Add(item);
 
-            // 현재 페이지 항목 중 선택 유지(있다면)
-            if (SelectedItem is not null && Items.Contains(SelectedItem) && SelectedItem.IsSelected)
-            {
-                // nothing
-            }
-            else
-            {
-                // 페이지 변경 시 선택 초기화
-                foreach (var it in Items) it.IsSelected = false;
-                SelectedItem = null;
-            }
+            // 페이지 변경 시 선택 상태 초기화
+            foreach (var it in Items) it.IsSelected = false;
+            SelectedItem = null;
         }
 
         private void RebuildPagination()
@@ -101,7 +96,7 @@ namespace WouldYou_ShareMind.ViewModels
             if (CurrentPage > totalPages) CurrentPage = totalPages;
         }
 
-        // SelectedItem 변경되면 IsSelected 동기화 (단일 선택 유지)
+        // 단일 선택 유지
         partial void OnSelectedItemChanged(ArchiveItem? value)
         {
             foreach (var it in AllItems) it.IsSelected = false;
@@ -140,15 +135,17 @@ namespace WouldYou_ShareMind.ViewModels
         [RelayCommand]
         private void OpenDetail(ArchiveItem item)
         {
+            // 필요 시 상세 팝업을 View로 분리 가능. 우선 간단히 메시지박스.
+            var ai = string.IsNullOrWhiteSpace(item.AiReply) ? "(AI 응답 없음)" : item.AiReply;
             System.Windows.MessageBox.Show(
-                $"제목: {item.Title}\n날짜: {item.DateText}\n\n{item.Summary}",
+                $"제목: {item.Title}\n날짜: {item.DateText}\n\n[본문]\n{item.Summary}\n\n[AI]\n{ai}",
                 "상세");
         }
 
+        // DB에서도 is_let_go=1 업데이트하고 목록에서 제거
         [RelayCommand]
-        private void ReleaseSelected()
+        private async Task ReleaseSelected()
         {
-            // SelectedItem 우선, 없으면 IsSelected 항목 검색
             var selected = SelectedItem ?? AllItems.FirstOrDefault(x => x.IsSelected);
             if (selected == null)
             {
@@ -156,18 +153,19 @@ namespace WouldYou_ShareMind.ViewModels
                 return;
             }
 
-            System.Windows.MessageBox.Show($"흘려보낸 마음: {selected.Title}", "완료");
+            // DB 업데이트
+            await _db.ExecAsync("UPDATE mind_log SET is_let_go = 1 WHERE id = @p0;", selected.Id);
 
-            // 삭제 후 페이지/선택 갱신
+            // UI에서 제거
             int indexBefore = AllItems.IndexOf(selected);
             AllItems.Remove(selected);
 
             RebuildPagination();
-
-            // 삭제된 인덱스 기준으로 같은 페이지 유지가 자연스럽다
             int newPage = Math.Clamp((indexBefore / PageSize) + 1, 1, PageNumbers.Count);
             CurrentPage = newPage;
             LoadPage(CurrentPage);
+
+            System.Windows.MessageBox.Show($"흘려보낸 마음: {selected.Title}", "완료");
         }
     }
 }
