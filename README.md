@@ -3,7 +3,7 @@
   <img src="Resources/images/logo.png" alt="우주÷마음 로고" width="250">
 </p>
 
-# WouldYou ÷ ShareMind (우주÷마음)
+# Would you share your mind?
 **불안한 밤, 마음을 조용히 털어놓고 — 공감 응답과 우주 사운드로 편안한 잠을 돕는 로컬 WPF 앱 (MVP)**
 
 ---
