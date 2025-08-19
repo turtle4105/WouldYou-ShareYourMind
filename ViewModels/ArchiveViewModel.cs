@@ -138,8 +138,7 @@ namespace WouldYou_ShareMind.ViewModels
             // 필요 시 상세 팝업을 View로 분리 가능. 우선 간단히 메시지박스.
             var ai = string.IsNullOrWhiteSpace(item.AiReply) ? "(AI 응답 없음)" : item.AiReply;
             System.Windows.MessageBox.Show(
-                $"제목: {item.Title}\n날짜: {item.DateText}\n\n[본문]\n{item.Summary}\n\n[AI]\n{ai}",
-                "상세");
+                $"제목: {item.Title}\n날짜: {item.DateText}\n\n[본문]\n{item.Summary}\n\n[🌙]\n{ai}");
         }
 
         // DB에서도 is_let_go=1 업데이트하고 목록에서 제거
