@@ -32,21 +32,65 @@ WouldYou ÷ ShareMind(우주÷마음)는 **WPF + MVVM (.NET 6)** 기반의 로�
 ```markdown
 
 WouldYou-ShareMind/
-├─ src/
-│  ├─ Views/                 # HomeView, ShareMindView, ArchiveView, SleepModeView, SettingView
-│  ├─ ViewModels/            # MainViewModel 등 (MVVM)
-│  ├─ Models/                # DTO/Record
-│  ├─ Services/              # EmotionService, DbService, AudioService, BreathingDetector, SettingsService
-│  ├─ Resources/
-│  │  ├─ images/             # UI 이미지/아이콘
-│  │  └─ audio/              # interstellar\_plasma.mp3 등 (Build Action: Content / Copy to Output: if newer)
-│  ├─ App.xaml, App.xaml.cs  # DI/스타일/리소스
-│  └─ MainWindow\.xaml\*       # 셸/네비게이션
-├─ Data/                     # (선택) 개발용 로컬 DB 위치
-├─ docs/
-│  ├─ assets/                # README용 로고/아이콘 (logo.png, icons/\*.svg)
-│  └─ screens/               # 스크린샷
+├─ src/                           # 실제 앱 소스코드
+│  ├─ Views/                      # 화면(XAML)
+│  │   ├─ HomeView.xaml
+│  │   ├─ ShareMindView.xaml      # 마음 나누기
+│  │   ├─ ArchiveView.xaml        # 보관함
+│  │   ├─ SleepModeView.xaml      # 수면 모드
+│  │   ├─ SettingView.xaml        # 설정
+│  │   └─ RecvPopupView.xaml      # 팝업
+│  │
+│  ├─ ViewModels/                 # 화면 로직(MVVM - VM)
+│  │   ├─ MainViewModel.cs
+│  │   ├─ HomeViewModel.cs
+│  │   ├─ ShareMindViewModel.cs
+│  │   ├─ ArchiveViewModel.cs
+│  │   ├─ SleepModeViewModel.cs
+│  │   └─ SettingViewModel.cs
+│  │
+│  ├─ Models/                     # 데이터 구조/DTO
+│  │   ├─ MindLog.cs              # 마음 기록 Entity
+│  │   ├─ SleepModeLog.cs
+│  │   ├─ BreathingLog.cs
+│  │   └─ Settings.cs
+│  │
+│  ├─ Services/                   # 비즈니스 로직/외부 연동
+│  │   ├─ AudioService.cs         # NAudio 기반 재생/캡처
+│  │   ├─ DbService.cs            # SQLite CRUD
+│  │   ├─ EmotionService.cs       # OpenAI API 호출
+│  │   ├─ BreathingDetector.cs    # 호흡 분석
+│  │   └─ SettingsService.cs      # 앱 설정 관리
+│  │
+│  ├─ Resources/                  # 정적 리소스
+│  │   ├─ images/                 # UI 아이콘/배경
+│  │   │   ├─ logo.png
+│  │   │   └─ icons/*.svg
+│  │   └─ audio/                  # 사운드 리소스
+│  │       ├─ interstellar_plasma.mp3
+│  │       ├─ space_waves.mp3
+│  │       └─ aurora_wind.mp3
+│  │
+│  ├─ App.xaml                    # 전체 스타일/리소스/DI 등록
+│  ├─ App.xaml.cs
+│  └─ MainWindow.xaml             # Shell/네비게이션
+│
+├─ Data/                          # 로컬 DB 파일
+│  └─ app.db                      # SQLite 데이터베이스
+│
+├─ docs/                          # 문서/설계 자료
+│  ├─ README.md
+│  ├─ system-architecture.png
+│  ├─ db-schema.md
+│  └─ assets/
+│       └─ logo.svg
+│
+├─ tests/                         # 단위/통합 테스트
+│  ├─ DbServiceTests.cs
+│  └─ EmotionServiceTests.cs
+│
+├─ .gitignore
+├─ WouldYou-ShareMind.sln
 └─ README.md
-
 
 ```
